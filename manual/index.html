@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>BUTLER TOKYO アプリの入れ方</title>
+<style>
+/* ===== (a) warm-paper テーマ一式 ===== */
+:root{
+  --ink:#2b2118; --sub:#7a6a58; --line:#ece3d8;
+  --bg:#faf6f0; --bg-soft:#f3eee7; --paper:#fff;
+  --accent:#c8633e; --accent-deep:#a94f2e; --accent-soft:#fbeee6;
+  --ok:#5a8a5a; --warn:#b07d2b; --gold:#b07d2b;
+  --c-learn:#b07d2b;  --c-learn-soft:#f8f0df;
+  --c-cowork:#5a8a5a; --c-cowork-soft:#ecf5ec;
+  --c-code:#3b6ea5;   --c-code-soft:#e9f1f9;
+  --c-rest:#8a7f9a;   --c-rest-soft:#f1eef6;
+  --radius:14px; --radius-sm:8px; --pill:999px;
+  --shadow:0 8px 30px rgba(43,33,24,.06);
+  --shadow-sm:0 4px 16px rgba(43,33,24,.05);
+  --maxw:860px;
+  --font:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,monospace;
+}
+body{line-height:1.8;}
+.hero{background:linear-gradient(180deg,#fbf5ec 0%,var(--bg) 100%);}
+
+/* ===== 共通基盤 ===== */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font); -webkit-font-smoothing:antialiased; font-size:17px;
+}
+a{color:var(--accent-deep);}
+img{max-width:100%; display:block;}
+h1,h2,h3,h4{line-height:1.4; margin:0; font-weight:700; letter-spacing:.01em;}
+h1{font-size:clamp(28px,6vw,40px); line-height:1.3;}
+h2{font-size:clamp(21px,4.4vw,28px);}
+h3{font-size:18px;}
+p{margin:0;}
+.lead{color:var(--sub); font-size:17px; max-width:720px;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px;}
+.section{padding:48px 0;}
+.section-soft{background:var(--bg-soft);}
+
+/* ツールバー */
+.toolbar{
+  position:sticky; top:0; z-index:50; display:flex; gap:10px; align-items:center; padding:10px 16px;
+  background:color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.toolbar .t{font-weight:700; font-size:14px; color:var(--sub); margin-right:auto;}
+.toolbar button{
+  font:inherit; font-size:13px; font-weight:600; cursor:pointer;
+  border:1px solid var(--line); background:var(--paper); color:var(--ink);
+  padding:8px 16px; border-radius:var(--radius-sm); transition:.15s;
+}
+.toolbar button:hover{border-color:var(--accent); color:var(--accent);}
+.toolbar button.primary{background:var(--accent); color:#fff; border-color:var(--accent);}
+.toolbar button.primary:hover{filter:brightness(1.06); color:#fff;}
+
+/* eyebrow / badge */
+.eyebrow{display:inline-block; font-size:13px; font-weight:700; letter-spacing:.1em;
+  color:var(--accent); background:var(--accent-soft); padding:6px 14px; border-radius:var(--pill); margin-bottom:18px;}
+
+/* hero */
+.hero{padding:54px 0 46px; border-bottom:1px solid var(--line);}
+.hero h1 .hl{color:var(--accent);}
+.hero .sub{color:var(--sub); font-size:clamp(16px,2.4vw,19px); margin-top:20px; max-width:640px;}
+.hero-badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+.hbadge{background:var(--paper); border:1px solid var(--line); border-radius:var(--pill);
+  padding:9px 16px; font-size:14px; font-weight:600; color:var(--sub); box-shadow:var(--shadow-sm);}
+.hbadge b{color:var(--ink);}
+
+/* sec-head */
+.sec-head{max-width:720px; margin:0 auto 8px;}
+.sec-head h2{margin-bottom:12px;}
+
+/* note */
+.note{font-size:15px; color:var(--sub); background:var(--bg-soft);
+  border-radius:var(--radius-sm); padding:16px 18px; margin:14px 0; line-height:1.75;}
+.note.tip{border-left:4px solid var(--accent); background:var(--accent-soft);}
+.note.warn{border-left:4px solid var(--warn); background:color-mix(in srgb,var(--warn) 8%,var(--paper));}
+.note.dashed{background:transparent; border:1px dashed var(--line);}
+.note b{color:var(--ink);}
+.note .nh{display:block; font-weight:700; color:var(--ink); font-size:15.5px; margin-bottom:5px;}
+
+/* 区切り見出し（前半・後半） */
+.phase{display:flex; align-items:center; gap:12px; margin:38px 0 4px;}
+.phase .pmark{font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:.08em;
+  color:#fff; background:var(--accent); padding:5px 12px; border-radius:var(--pill); white-space:nowrap;}
+.phase h3{font-size:19px;}
+.phase + .phase-sub{color:var(--sub); font-size:14.5px; margin:6px 0 4px;}
+
+/* 大きめステップ（1ステップ1ブロック・縦積み） */
+.bigsteps{margin-top:14px;}
+.bstep{
+  display:flex; gap:18px; align-items:flex-start;
+  background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+  padding:22px 20px; box-shadow:var(--shadow-sm); margin-bottom:14px;
+}
+.bstep .sno{
+  flex:0 0 auto; width:52px; height:52px; border-radius:13px;
+  background:var(--accent); color:#fff; font-family:var(--mono);
+  font-weight:800; font-size:22px; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 16px var(--accent-soft);
+}
+.bstep .body{flex:1 1 auto; min-width:0;}
+.bstep .body h4{font-size:18px; margin:4px 0 8px; line-height:1.4;}
+.bstep .body p{font-size:16px; color:var(--sub); line-height:1.8;}
+.bstep .body .inline-note{
+  margin-top:10px; font-size:14px; color:var(--sub);
+  background:var(--bg-soft); border-radius:var(--radius-sm); padding:10px 13px; line-height:1.7;
+}
+.bstep.done{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));
+  background:color-mix(in srgb,var(--ok) 7%,var(--paper));}
+.bstep.done .sno{background:var(--ok); box-shadow:0 6px 16px color-mix(in srgb,var(--ok) 30%,transparent);}
+
+/* FAQ */
+.faq{margin:28px auto 0;}
+.qa{background:var(--paper); border:1px solid var(--line); border-radius:14px;
+  margin-bottom:13px; overflow:hidden; box-shadow:var(--shadow-sm);}
+.qa summary{cursor:pointer; list-style:none; padding:18px 20px; font-weight:700; font-size:16px;
+  display:flex; justify-content:space-between; align-items:center; gap:14px; line-height:1.5;}
+.qa summary::-webkit-details-marker{display:none;}
+.qa summary .qmark{color:var(--accent); font-weight:800; margin-right:8px; font-family:var(--mono);}
+.qa summary .chev{color:var(--accent); transition:transform .2s; flex:0 0 auto; font-size:13px;}
+.qa[open] summary .chev{transform:rotate(180deg);}
+.qa .ans{padding:0 20px 20px 20px; color:var(--sub); font-size:15.5px; line-height:1.85;}
+
+/* 締めCTA帯 */
+.footer-cta{background:linear-gradient(135deg,var(--accent-deep),var(--accent));
+  color:#fff; text-align:center; padding:54px 0;}
+.footer-cta h2,.footer-cta p{color:#fff;}
+.footer-cta p{opacity:.92; margin-top:14px; font-size:17px; max-width:560px; margin-left:auto; margin-right:auto; line-height:1.8;}
+footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5px; color:var(--sub); line-height:1.8;}
+
+/* ===== 印刷 ===== */
+@media print{
+  body{background:#fff;}
+  .toolbar{display:none;}
+  .wrap{margin:0; max-width:none;}
+  .bstep,.qa,.note{box-shadow:none !important;}
+  .section{padding:18px 0;}
+  .bstep,.qa,.note{break-inside:avoid;}
+}
+
+/* ===== レスポンシブ（スマホ最優先） ===== */
+@media(max-width:560px){
+  body{font-size:16px;}
+  .wrap{padding:0 16px;}
+  .section{padding:40px 0;}
+  .bstep{padding:18px 16px; gap:14px;}
+  .bstep .sno{width:46px; height:46px; font-size:19px; border-radius:12px;}
+  .bstep .body h4{font-size:17px;}
+  .bstep .body p{font-size:15.5px;}
+  .phase{flex-wrap:wrap; gap:9px;}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="t">BUTLER TOKYO アプリの入れ方</span>
+  <button onclick="window.print()" class="primary">印刷 / PDF保存</button>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">勝俣様へ ・ iPhone専用 ・ 所要 約3分</span>
+  <h1>BUTLER TOKYO<br><span class="hl">アプリの入れ方</span></h1>
+  <p class="sub">LINEで届いたファイルから、ホーム画面に追加するまで。<br>上から順に、ひとつずつ進めれば終わります。</p>
+  <div class="hero-badges">
+    <div class="hbadge"><b>iPhone</b>でお使いください</div>
+    <div class="hbadge">かかる時間 <b>約3分</b></div>
+    <div class="hbadge">むずかしい操作は<b>ありません</b></div>
+  </div>
+</div></section>
+
+<!-- ===== 前提 ===== -->
+<section class="section"><div class="wrap">
+  <div class="note tip">
+    <span class="nh">はじめにお読みください</span>
+    これは「BUTLER TOKYO」の注文サイトを、iPhoneのホーム画面からアプリのように開けるようにするための手順書です。LINEで「butler-tokyo.mobileconfig」というファイルが届いているはずです。それを使います。
+  </div>
+  <div class="note dashed">
+    <span class="nh">この方法について</span>
+    これはApp Storeの正式アプリではなく、Apple公式の仕組み「構成プロファイル」（ホーム画面にアイコンを置くための小さな設定ファイル）を使う方法です。データの収集や端末の管理は一切しません。
+  </div>
+</div></section>
+
+<!-- ===== 手順 ===== -->
+<section class="section section-soft"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">手順</span>
+    <h2>9つのステップで完成します</h2>
+    <p class="lead">前半でファイルを保存し、後半で入れていきます。途中で迷っても、それぞれのステップに目印を入れていますので大丈夫です。</p>
+  </div>
+
+  <!-- 前半 -->
+  <div class="phase"><span class="pmark">前半</span><h3>ファイルを保存する</h3></div>
+  <p class="phase-sub">まず、LINEで届いたファイルを「ファイル」アプリに保存します。</p>
+
+  <div class="bigsteps">
+    <div class="bstep">
+      <div class="sno">01</div>
+      <div class="body">
+        <h4>LINEで届いたファイルをタップ</h4>
+        <p>トーク画面の「butler-tokyo.mobileconfig」をタップします。</p>
+      </div>
+    </div>
+
+    <div class="bstep">
+      <div class="sno">02</div>
+      <div class="body">
+        <h4>共有ボタンを押す</h4>
+        <p>「プレビューできません」などと表示されたら、画面の共有ボタンを押します。</p>
+        <div class="inline-note">共有ボタン　＝　四角から上向きの矢印が出ているマークです。</div>
+      </div>
+    </div>
+
+    <div class="bstep">
+      <div class="sno">03</div>
+      <div class="body">
+        <h4>「"ファイル"に保存」を選ぶ</h4>
+        <p>保存先は「このiPhone内」でも「ダウンロード」でも、どこでも大丈夫です。「保存」を押します。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 後半 -->
+  <div class="phase"><span class="pmark">後半</span><h3>インストールする</h3></div>
+  <p class="phase-sub">保存したファイルを開いて、ホーム画面に追加します。</p>
+
+  <div class="bigsteps">
+    <div class="bstep">
+      <div class="sno">04</div>
+      <div class="body">
+        <h4>「ファイル」アプリを開く</h4>
+        <p>ホーム画面から「ファイル」アプリを開き、さっき保存した場所にある「butler-tokyo.mobileconfig」をタップします。</p>
+      </div>
+    </div>
+
+    <div class="bstep">
+      <div class="sno">05</div>
+      <div class="body">
+        <h4>「閉じる」を押す</h4>
+        <p>「プロファイルがダウンロードされました」と表示されたら「閉じる」を押します。</p>
+        <div class="inline-note">ここではまだインストールは終わっていません。次の06へ進んでください。</div>
+      </div>
+    </div>
+
+    <div class="bstep">
+      <div class="sno">06</div>
+      <div class="body">
+        <h4>「設定」アプリを開く</h4>
+        <p>iPhoneの「設定」を開くと、上のほうに「プロファイルがダウンロード済み」と出ています。それをタップします。</p>
+        <div class="inline-note">見当たらないときは、「設定 → 一般 → VPNとデバイス管理」を開いてください。</div>
+      </div>
+    </div>
+
+    <div class="bstep">
+      <div class="sno">07</div>
+      <div class="body">
+        <h4>「インストール」を押す</h4>
+        <p>右上の「インストール」を押し、iPhoneのパスコードを入力します。</p>
+      </div>
+    </div>
+
+    <div class="bstep">
+      <div class="sno">08</div>
+      <div class="body">
+        <h4>警告が出てももう一度「インストール」</h4>
+        <p>赤い字で「未署名」と表示されますが、問題ありません。「インストール」をもう一度押し、最後に「完了」を押します。</p>
+        <div class="inline-note">「未署名」の意味は、このあとの「よくある質問」でくわしく説明します。</div>
+      </div>
+    </div>
+
+    <div class="bstep done">
+      <div class="sno">09</div>
+      <div class="body">
+        <h4>完了</h4>
+        <p>ホーム画面に「BUTLER TOKYO」のアイコンが追加されています。タップすると注文サイトが全画面で開きます。お疲れさまでした。</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ===== よくある質問・注意 ===== -->
+<section class="section"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">よくある質問・注意</span>
+    <h2>気になるところに答えます</h2>
+  </div>
+
+  <div class="note warn">
+    <span class="nh">「未署名」と赤く出るのはなぜ？</span>
+    アイコンを置くだけの自作ファイルで、Appleに署名料を払っていないという意味だけです。中身に問題はないので、そのまま進めて大丈夫です。
+  </div>
+
+  <div class="note tip">
+    <span class="nh">ファイルが消えてしまった</span>
+    ダウンロードしたファイルは8分くらいで自動的に消えることがあります。その場合は、LINEのファイルをもう一度タップして保存し直してください。
+  </div>
+
+  <div class="note tip">
+    <span class="nh">「インストール」が押せない／進めない</span>
+    「盗難デバイスの保護」という機能をオンにしている場合は、自宅などよく行く場所で操作するか、一時的にオフにしてください（設定 → Face IDとパスコード）。
+  </div>
+
+  <div class="note">
+    <span class="nh">いらなくなったら</span>
+    「設定 → 一般 → VPNとデバイス管理」からいつでも削除できます。ホーム画面のアイコンが消えるだけです。
+  </div>
+</div></section>
+
+<!-- ===== こまったとき ===== -->
+<section class="section section-soft"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">こまったとき</span>
+    <h2>うまくいかないときは</h2>
+  </div>
+  <div class="note tip">
+    <span class="nh">別のやり方も用意しています</span>
+    こちらのページに、QRコードやリンクから入れる方法も載せています。<br>
+    <a href="https://imai-design.github.io/butler-tokyo-app/" target="_blank" rel="noopener">https://imai-design.github.io/butler-tokyo-app/</a>
+  </div>
+  <div class="note dashed">
+    <span class="nh">それでも難しいときは</span>
+    今井までLINEで「できなかった」と送ってください。一緒に進めます。
+  </div>
+</div></section>
+
+<!-- ===== 締め ===== -->
+<section class="footer-cta"><div class="wrap">
+  <h2>まずは、ステップ01から。</h2>
+  <p>上から順に、ひとつずつ進めてみてください。約3分で終わります。</p>
+</div></section>
+
+<footer class="doc">
+  BUTLER TOKYO アプリの入れ方 ・ 「印刷 / PDF保存」でそのまま保存できます
+</footer>
+
+<script>
+// FAQ風noteは静的なので開閉JS不要。details未使用のためスクリプトは最小。
+</script>
+
+</body>
+</html>
