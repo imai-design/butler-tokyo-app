@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex,nofollow">
 <title>BUTLER TOKYO アプリの入れ方</title>
 <style>
 /* ===== (a) warm-paper テーマ一式 ===== */
@@ -13,10 +12,6 @@
   --bg:#faf6f0; --bg-soft:#f3eee7; --paper:#fff;
   --accent:#c8633e; --accent-deep:#a94f2e; --accent-soft:#fbeee6;
   --ok:#5a8a5a; --warn:#b07d2b; --gold:#b07d2b;
-  --c-learn:#b07d2b;  --c-learn-soft:#f8f0df;
-  --c-cowork:#5a8a5a; --c-cowork-soft:#ecf5ec;
-  --c-code:#3b6ea5;   --c-code-soft:#e9f1f9;
-  --c-rest:#8a7f9a;   --c-rest-soft:#f1eef6;
   --radius:14px; --radius-sm:8px; --pill:999px;
   --shadow:0 8px 30px rgba(43,33,24,.06);
   --shadow-sm:0 4px 16px rgba(43,33,24,.05);
@@ -62,7 +57,15 @@ p{margin:0;}
 .toolbar button.primary{background:var(--accent); color:#fff; border-color:var(--accent);}
 .toolbar button.primary:hover{filter:brightness(1.06); color:#fff;}
 
-/* eyebrow / badge */
+/* LINE誘導バナー */
+.line-warn{display:none; background:var(--gold); color:#1f1606; padding:18px 20px; text-align:center; line-height:1.7;}
+.line-warn .lh{font-weight:700; font-size:16px; display:block; margin-bottom:4px;}
+.line-warn .ls{font-size:14px; display:block; margin-bottom:13px;}
+.line-warn a{display:inline-block; background:#1f1606; color:#fff; text-decoration:none;
+  font-weight:700; font-size:15px; padding:12px 30px; border-radius:var(--pill);}
+.line-warn .lf{font-size:12.5px; display:block; margin-top:11px; opacity:.8;}
+
+/* eyebrow */
 .eyebrow{display:inline-block; font-size:13px; font-weight:700; letter-spacing:.1em;
   color:var(--accent); background:var(--accent-soft); padding:6px 14px; border-radius:var(--pill); margin-bottom:18px;}
 
@@ -79,6 +82,13 @@ p{margin:0;}
 .sec-head{max-width:720px; margin:0 auto 8px;}
 .sec-head h2{margin-bottom:12px;}
 
+/* ダウンロードボタン */
+.dl-btn{display:block; text-align:center; text-decoration:none; color:#fff; background:var(--accent);
+  font-size:19px; font-weight:800; padding:20px 24px; border-radius:var(--radius);
+  box-shadow:0 12px 28px var(--accent-soft); margin:6px 0; line-height:1.4; transition:.15s;}
+.dl-btn:hover{background:var(--accent-deep);}
+.dl-btn .small{display:block; font-size:13px; font-weight:600; opacity:.92; margin-top:5px;}
+
 /* note */
 .note{font-size:15px; color:var(--sub); background:var(--bg-soft);
   border-radius:var(--radius-sm); padding:16px 18px; margin:14px 0; line-height:1.75;}
@@ -88,15 +98,8 @@ p{margin:0;}
 .note b{color:var(--ink);}
 .note .nh{display:block; font-weight:700; color:var(--ink); font-size:15.5px; margin-bottom:5px;}
 
-/* 区切り見出し（前半・後半） */
-.phase{display:flex; align-items:center; gap:12px; margin:38px 0 4px;}
-.phase .pmark{font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:.08em;
-  color:#fff; background:var(--accent); padding:5px 12px; border-radius:var(--pill); white-space:nowrap;}
-.phase h3{font-size:19px;}
-.phase + .phase-sub{color:var(--sub); font-size:14.5px; margin:6px 0 4px;}
-
 /* 大きめステップ（1ステップ1ブロック・縦積み） */
-.bigsteps{margin-top:14px;}
+.bigsteps{margin-top:20px;}
 .bstep{
   display:flex; gap:18px; align-items:flex-start;
   background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
@@ -119,18 +122,6 @@ p{margin:0;}
   background:color-mix(in srgb,var(--ok) 7%,var(--paper));}
 .bstep.done .sno{background:var(--ok); box-shadow:0 6px 16px color-mix(in srgb,var(--ok) 30%,transparent);}
 
-/* FAQ */
-.faq{margin:28px auto 0;}
-.qa{background:var(--paper); border:1px solid var(--line); border-radius:14px;
-  margin-bottom:13px; overflow:hidden; box-shadow:var(--shadow-sm);}
-.qa summary{cursor:pointer; list-style:none; padding:18px 20px; font-weight:700; font-size:16px;
-  display:flex; justify-content:space-between; align-items:center; gap:14px; line-height:1.5;}
-.qa summary::-webkit-details-marker{display:none;}
-.qa summary .qmark{color:var(--accent); font-weight:800; margin-right:8px; font-family:var(--mono);}
-.qa summary .chev{color:var(--accent); transition:transform .2s; flex:0 0 auto; font-size:13px;}
-.qa[open] summary .chev{transform:rotate(180deg);}
-.qa .ans{padding:0 20px 20px 20px; color:var(--sub); font-size:15.5px; line-height:1.85;}
-
 /* 締めCTA帯 */
 .footer-cta{background:linear-gradient(135deg,var(--accent-deep),var(--accent));
   color:#fff; text-align:center; padding:54px 0;}
@@ -141,11 +132,11 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
 /* ===== 印刷 ===== */
 @media print{
   body{background:#fff;}
-  .toolbar{display:none;}
+  .toolbar,.line-warn{display:none !important;}
   .wrap{margin:0; max-width:none;}
-  .bstep,.qa,.note{box-shadow:none !important;}
+  .bstep,.note,.dl-btn{box-shadow:none !important;}
   .section{padding:18px 0;}
-  .bstep,.qa,.note{break-inside:avoid;}
+  .bstep,.note{break-inside:avoid;}
 }
 
 /* ===== レスポンシブ（スマホ最優先） ===== */
@@ -157,11 +148,17 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
   .bstep .sno{width:46px; height:46px; font-size:19px; border-radius:12px;}
   .bstep .body h4{font-size:17px;}
   .bstep .body p{font-size:15.5px;}
-  .phase{flex-wrap:wrap; gap:9px;}
 }
 </style>
 </head>
 <body>
+
+<div class="line-warn" id="lineWarn">
+  <span class="lh">LINEの中から開いている方へ</span>
+  <span class="ls">このままだとダウンロードできません。下のボタンでSafariで開き直してください。</span>
+  <a id="openSafari" href="#">Safariで開き直す</a>
+  <span class="lf">開かないときは、画面右下のメニューから「ブラウザで開く」を選んでください。</span>
+</div>
 
 <div class="toolbar">
   <span class="t">BUTLER TOKYO アプリの入れ方</span>
@@ -172,9 +169,9 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
 <section class="hero"><div class="wrap">
   <span class="eyebrow">勝俣様へ ・ iPhone専用 ・ 所要 約3分</span>
   <h1>BUTLER TOKYO<br><span class="hl">アプリの入れ方</span></h1>
-  <p class="sub">LINEで届いたファイルから、ホーム画面に追加するまで。<br>上から順に、ひとつずつ進めれば終わります。</p>
+  <p class="sub">このページの下のボタンでダウンロードして、ホーム画面に追加するまで。<br>上から順に、ひとつずつ進めれば終わります。</p>
   <div class="hero-badges">
-    <div class="hbadge"><b>iPhone</b>でお使いください</div>
+    <div class="hbadge"><b>iPhone</b>のSafariで開いてください</div>
     <div class="hbadge">かかる時間 <b>約3分</b></div>
     <div class="hbadge">むずかしい操作は<b>ありません</b></div>
   </div>
@@ -184,7 +181,7 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
 <section class="section"><div class="wrap">
   <div class="note tip">
     <span class="nh">はじめにお読みください</span>
-    これは「BUTLER TOKYO」の注文サイトを、iPhoneのホーム画面からアプリのように開けるようにするための手順書です。LINEで「butler-tokyo.mobileconfig」というファイルが届いているはずです。それを使います。
+    これは「BUTLER TOKYO」の注文サイトを、iPhoneのホーム画面からアプリのように開けるようにするための手順書です。下のボタンからファイルを取り込み、設定アプリで入れていきます。
   </div>
   <div class="note dashed">
     <span class="nh">この方法について</span>
@@ -196,65 +193,41 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
 <section class="section section-soft"><div class="wrap">
   <div class="sec-head">
     <span class="eyebrow">手順</span>
-    <h2>9つのステップで完成します</h2>
-    <p class="lead">前半でファイルを保存し、後半で入れていきます。途中で迷っても、それぞれのステップに目印を入れていますので大丈夫です。</p>
+    <h2>6つのステップで完成します</h2>
+    <p class="lead">まず下のボタンを押して、あとは画面の案内に沿って進めるだけです。</p>
   </div>
 
-  <!-- 前半 -->
-  <div class="phase"><span class="pmark">前半</span><h3>ファイルを保存する</h3></div>
-  <p class="phase-sub">まず、LINEで届いたファイルを「ファイル」アプリに保存します。</p>
+  <a class="dl-btn" href="butler-tokyo.mobileconfig" download>アプリをダウンロード<span class="small">押すと小さなファイルが取り込まれます（約40KB）</span></a>
 
   <div class="bigsteps">
     <div class="bstep">
       <div class="sno">01</div>
       <div class="body">
-        <h4>LINEで届いたファイルをタップ</h4>
-        <p>トーク画面の「butler-tokyo.mobileconfig」をタップします。</p>
+        <h4>上のボタンを押す</h4>
+        <p>「"butler-tokyo.mobileconfig"をダウンロードしますか?」と出たら、「ダウンロード」を押します。</p>
       </div>
     </div>
 
     <div class="bstep">
       <div class="sno">02</div>
       <div class="body">
-        <h4>共有ボタンを押す</h4>
-        <p>「プレビューできません」などと表示されたら、画面の共有ボタンを押します。</p>
-        <div class="inline-note">共有ボタン　＝　四角から上向きの矢印が出ているマークです。</div>
+        <h4>ダウンロードしたファイルを開く</h4>
+        <p>画面の右上に出る下向きの矢印を押し、「butler-tokyo.mobileconfig」をタップします。</p>
+        <div class="inline-note">見つからないときは、「ファイル」アプリ → 「ダウンロード」フォルダの中のファイルをタップしてください。</div>
       </div>
     </div>
 
     <div class="bstep">
       <div class="sno">03</div>
       <div class="body">
-        <h4>「"ファイル"に保存」を選ぶ</h4>
-        <p>保存先は「このiPhone内」でも「ダウンロード」でも、どこでも大丈夫です。「保存」を押します。</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 後半 -->
-  <div class="phase"><span class="pmark">後半</span><h3>インストールする</h3></div>
-  <p class="phase-sub">保存したファイルを開いて、ホーム画面に追加します。</p>
-
-  <div class="bigsteps">
-    <div class="bstep">
-      <div class="sno">04</div>
-      <div class="body">
-        <h4>「ファイル」アプリを開く</h4>
-        <p>ホーム画面から「ファイル」アプリを開き、さっき保存した場所にある「butler-tokyo.mobileconfig」をタップします。</p>
-      </div>
-    </div>
-
-    <div class="bstep">
-      <div class="sno">05</div>
-      <div class="body">
         <h4>「閉じる」を押す</h4>
         <p>「プロファイルがダウンロードされました」と表示されたら「閉じる」を押します。</p>
-        <div class="inline-note">ここではまだインストールは終わっていません。次の06へ進んでください。</div>
+        <div class="inline-note">ここではまだインストールは終わっていません。次の04へ進んでください。</div>
       </div>
     </div>
 
     <div class="bstep">
-      <div class="sno">06</div>
+      <div class="sno">04</div>
       <div class="body">
         <h4>「設定」アプリを開く</h4>
         <p>iPhoneの「設定」を開くと、上のほうに「プロファイルがダウンロード済み」と出ています。それをタップします。</p>
@@ -263,24 +236,16 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
     </div>
 
     <div class="bstep">
-      <div class="sno">07</div>
+      <div class="sno">05</div>
       <div class="body">
         <h4>「インストール」を押す</h4>
-        <p>右上の「インストール」を押し、iPhoneのパスコードを入力します。</p>
-      </div>
-    </div>
-
-    <div class="bstep">
-      <div class="sno">08</div>
-      <div class="body">
-        <h4>警告が出てももう一度「インストール」</h4>
-        <p>赤い字で「未署名」と表示されますが、問題ありません。「インストール」をもう一度押し、最後に「完了」を押します。</p>
+        <p>右上の「インストール」を押し、iPhoneのパスコードを入力します。赤い字で「未署名」と出ますが問題ありません。もう一度「インストール」を押し、最後に「完了」を押します。</p>
         <div class="inline-note">「未署名」の意味は、このあとの「よくある質問」でくわしく説明します。</div>
       </div>
     </div>
 
     <div class="bstep done">
-      <div class="sno">09</div>
+      <div class="sno">06</div>
       <div class="body">
         <h4>完了</h4>
         <p>ホーム画面に「BUTLER TOKYO」のアイコンが追加されています。タップすると注文サイトが全画面で開きます。お疲れさまでした。</p>
@@ -302,8 +267,13 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
   </div>
 
   <div class="note tip">
+    <span class="nh">ボタンを押しても何も起きない／ダウンロードできない</span>
+    LINEの中の画面（LINEブラウザ）で開いていると、ダウンロードができません。ページ上部の案内から「Safariで開き直す」を押すか、画面右下のメニューから「ブラウザで開く」を選んでから、もう一度お試しください。
+  </div>
+
+  <div class="note tip">
     <span class="nh">ファイルが消えてしまった</span>
-    ダウンロードしたファイルは8分くらいで自動的に消えることがあります。その場合は、LINEのファイルをもう一度タップして保存し直してください。
+    取り込んだファイルは8分くらいで自動的に消えることがあります。その場合は、もう一度「アプリをダウンロード」ボタンを押し直してください。
   </div>
 
   <div class="note tip">
@@ -324,8 +294,8 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
     <h2>うまくいかないときは</h2>
   </div>
   <div class="note tip">
-    <span class="nh">別のやり方も用意しています</span>
-    こちらのページに、QRコードやリンクから入れる方法も載せています。<br>
+    <span class="nh">もうひとつのやり方</span>
+    ボタンを使わず、Safariの「ホーム画面に追加」でも同じことができます（アイコンの見た目だけ少し変わります）。やり方はこちらのページに載せています。<br>
     <a href="https://imai-design.github.io/butler-tokyo-app/" target="_blank" rel="noopener">https://imai-design.github.io/butler-tokyo-app/</a>
   </div>
   <div class="note dashed">
@@ -337,7 +307,7 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
 <!-- ===== 締め ===== -->
 <section class="footer-cta"><div class="wrap">
   <h2>まずは、ステップ01から。</h2>
-  <p>上から順に、ひとつずつ進めてみてください。約3分で終わります。</p>
+  <p>上の「アプリをダウンロード」を押して、ひとつずつ進めてみてください。約3分で終わります。</p>
 </div></section>
 
 <footer class="doc">
@@ -345,7 +315,14 @@ footer.doc{margin-top:0; padding:28px 0 54px; text-align:center; font-size:12.5p
 </footer>
 
 <script>
-// FAQ風noteは静的なので開閉JS不要。details未使用のためスクリプトは最小。
+(function () {
+  // LINE内蔵ブラウザではダウンロード不可のためSafariへ誘導する
+  if (/Line\//i.test(navigator.userAgent || "")) {
+    var base = location.href.split("#")[0].split("?")[0];
+    document.getElementById("openSafari").href = base + "?openExternalBrowser=1";
+    document.getElementById("lineWarn").style.display = "block";
+  }
+})();
 </script>
 
 </body>
